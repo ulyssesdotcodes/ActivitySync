@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Activity Sync</string>
+    <string name="fitbit_login">Fitbit Login</string>
+</resources>

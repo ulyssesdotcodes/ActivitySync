@@ -1,0 +1,57 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion 27
+    defaultConfig {
+        applicationId "com.ulyssesp.activitysync"
+        minSdkVersion 19
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file('secrets.properties').newDataInputStream())
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            buildConfigField("String", "CLIENT_ID", properties.getProperty("clientId"))
+            buildConfigField("String", "CLIENT_SECRET", properties.getProperty("clientSecret"))
+            buildConfigField("String", "REDIRECT_URL", properties.getProperty("redirectUrl"))
+            buildConfigField("String", "SECURE_KEY", properties.getProperty("secureKey"))
+        }
+    }
+    dataBinding {
+        enabled = true
+    }
+}
+
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation 'com.android.support:appcompat-v7:27.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+
+    api 'io.reactivex.rxjava2:rxkotlin:2.2.0'
+    api 'com.jakewharton.rxbinding2:rxbinding-kotlin:2.1.1'
+    api 'com.jakewharton.rxbinding2:rxbinding-appcompat-v7-kotlin:2.1.1'
+
+    api 'com.android.support:customtabs:27.1.0'
+
+    api 'com.squareup.retrofit2:retrofit:2.4.0'
+    api "com.squareup.retrofit2:converter-moshi:2.0.0"
+    api 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    api 'com.squareup.okhttp3:logging-interceptor:3.9.1'
+
+}
